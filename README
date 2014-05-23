@@ -1,0 +1,34 @@
+steveschmidt
+hw3
+
+*****************************************************************
+**MPI vs OMP demonstrating blocking vs non-blocking techniques***
+*****************************************************************
+
+Attached are graphs of various although not all inclusive tests of MPI blocking vs MPI non-blocking and OpenMP tests on Midway.
+
+Unfortunately, or fortunately, the variance between several blocking verse non-blocking time trials was shockingly small. As you see from the graphs in some cases as N increased to upwards of 10,000 the difference remained within a tenth of a second and much smaller with smaller matrices. 
+
+The strong scaling was linear as well between these two implemetations, where as we increased N and the number of cores, there was direct correlation of the time taken.
+
+As far as actual coding implementation, this was a great assignment (all around even though it was incredibly error checking intense!), I felt moreso for the MPI_Sendrcv aspect. Following a Create_cart and Cart_shift, those three really speedup the process and are very easy implementations of MPI in parellizable code. 
+
+*******************************
+***********  OpenMP  **********
+*******************************
+
+Most of the tests I ran with OpenMP, even verse serial were not as great as MPI. I was unsure if this was due to problem size or the effectiveness of MPI. Again to me, 10,000x10,000 is a fairly large size matrix compared to the hundredsxhundreds we usually work with. One line implementations of omp are great, and even easier than MPI, I think the thing I like about it best is parellel for where a quick loop can get optimized. 
+
+***********************************************
+******  Notes on compilation/argv's  **********
+***********************************************
+
+Included is a text file to send as argv1 called numfile.txt. It lists in order N, NT, L, T, u, v1 (the double part of v to be multiplied by u). I do also init the programs outside of the file should it be forgotten.
+
+There are two asserts - one for the Courant stability condition and the other for my code condition being that I divide by root of nprocs so, please use 4, 16, 25 procs. 
+
+**************************************************
+**** Additional Notes on Serial Code etc *********
+**************************************************
+
+It took me quite a long time to finalize my serial code - up until due date (with OMP too). Fatal flaw was in the up, right, left, down shifting where I short circuited my else if's without checking all possible conditions. Figured this out around 9:37pm on due day. So all should be good although it was only off a little from the start. Last week I produced 400x400 graphs to check and the advection worked until 12500 then zeroed out but at least it was on the path at that point. I did not include that text file, but could if needed...the graph killed (again) my computer in ipython notebook while graphing a couple times before succeeding. The other flaw which I realize now is mallocing verse [][] arrays. I've grown to really like the malloc, but when I'm 'prototyping' either in serial or quickly I go to brackets quick and then sometimes lose the time to go back. I need to work on that. Of course the other obvious work on item is modulizing my code. Again, for another time but I know it should be done.
